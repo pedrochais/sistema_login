@@ -14,8 +14,8 @@ $query = "
     ";
 
 //Realizando consulta no banco de dados
-$resultado = $conexao->query($query);
-$dados = $resultado->fetchAll();
+$statement = $conexao->query($query);
+$dados = $statement->fetchAll();
 
 //Verificando se o usuário existe no banco de dados
 $usuario_encontrado = false;

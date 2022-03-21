@@ -7,7 +7,7 @@ $senha = $_POST['senha'];
 
 //Instrução SQL
 $query = "
-SELECT nome FROM conta
+    SELECT nome FROM conta
 ";
 
 //Executando instrução
@@ -26,9 +26,20 @@ if($nome_indisponivel){
     header('Location: cadastro.php?msg=nome_indisponivel');
 }else{
     $query = "
-        INSERT INTO conta (nome, senha) values ('$nome', '$senha');
+        INSERT INTO conta (nome, senha) values (:nome, :senha);
     ";
-    $conexao->exec($query);
+
+    //Preparando a instrução para inserir os dados no BD
+    $statement = $conexao->prepare($query);
+
+    //Proteção contra SQL Injection
+    //Fazendo o tratamento dos dados nas variáveis $nome e $senha
+    $statement->bindValue(':nome', $nome);
+    $statement->bindValue(':senha', $senha);
+    
+    //Após tratados os dados a query deve ser executada
+    $statement->execute();
+    
     header('Location: cadastro.php?msg=usuario_cadastrado');
 }
 ?>

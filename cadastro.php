@@ -1,6 +1,8 @@
 <?php
 if(isset($_GET['msg'])){
     $msg = $_GET['msg'];
+}else{
+    $msg = '';
 }
 ?>
 <!DOCTYPE html>
